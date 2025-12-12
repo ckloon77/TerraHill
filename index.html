@@ -157,29 +157,26 @@
         .feature-item i { color: var(--primary-light); margin-top: 4px; flex-shrink: 0; }
         .feature-item div { font-size: 0.95rem; color: #ddd; }
 
-        /* Horizontal Scroll Cards */
+        /* --- UPDATED: Vertical Stacked Cards --- */
         .cards-wrapper {
             width: 100%;
             max-width: 500px;
-            overflow-x: auto;
+            /* Removed horizontal scroll properties */
             display: flex;
-            gap: 15px;
-            padding: 10px 5px 25px 5px;
-            -webkit-overflow-scrolling: touch;
-            scroll-snap-type: x mandatory;
+            flex-direction: column; /* Stack vertically */
+            gap: 12px;
+            padding: 5px 0;
         }
 
         .card {
-            min-width: 280px;
+            width: 100%; /* Full width of container */
             background: var(--card-bg);
             border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px;
-            padding: 1.5rem;
+            border-radius: 12px;
+            padding: 1.2rem;
             text-align: left;
-            scroll-snap-align: center;
             backdrop-filter: blur(10px);
             box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            flex-shrink: 0;
         }
 
         .card.featured {
