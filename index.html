@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Double Wave: Terra Hill Market Update</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #B22222; /* Terra Hill Deep Red */
+            --primary-light: #ff4d4d;
+            --dark: #121212;
+            --card-bg: rgba(30, 30, 30, 0.9);
+            --text-main: #ffffff;
+            --text-muted: #e0e0e0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--text-main);
+            font-family: 'Lato', sans-serif;
+            overflow: hidden; 
+        }
+
+        /* Snap Scroll Container */
+        .story-container {
+            height: 100vh;
+            height: 100dvh; 
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        /* Individual Slide Section */
+        section {
+            height: 100vh;
+            height: 100dvh;
+            width: 100%;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            
+            /* Background Defaults */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: rgba(0, 0, 0, 0.6); 
+            background-blend-mode: overlay; 
+        }
+
+        /* Typography */
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        
+        h1 span { color: var(--primary-light); }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary-light);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #fff;
+            margin-bottom: 1rem;
+            max-width: 600px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+            p { font-size: 0.95rem; }
+        }
+
+        /* Stat Box */
+        .stat-box {
+            background: rgba(0, 0, 0, 0.6);
+            border-left: 4px solid var(--primary);
+            padding: 1.2rem;
+            border-radius: 0 12px 12px 0;
+            margin: 1rem 0;
+            width: 100%;
+            max-width: 400px;
+            text-align: left;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 0.5rem;
+        }
+        .stat-row:last-child { border: none; margin: 0; padding: 0; }
+        
+        .stat-label { font-size: 0.9rem; color: #ccc; }
+        .stat-value { font-size: 1.1rem; font-weight: bold; color: #fff; }
+        .stat-value.red { color: var(--primary-light); }
+        .stat-value.green { color: #4ade80; }
+
+        /* Citation Link */
+        .citation-link {
+            font-size: 0.7rem;
+            color: #ccc;
+            text-decoration: none;
+            border-bottom: 1px dotted #ccc;
+            margin-left: 5px;
+            vertical-align: top;
+        }
+
+        /* Feature List */
+        .feature-list {
+            text-align: left;
+            background: rgba(0,0,0,0.6);
+            padding: 1.2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+            width: 100%;
+            max-width: 450px;
+        }
+        .feature-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            align-items: flex-start;
+        }
+        .feature-item i { color: var(--primary-light); margin-top: 4px; flex-shrink: 0; }
+        .feature-item div { font-size: 0.95rem; color: #ddd; }
+
+        /* Horizontal Scroll Cards */
+        .cards-wrapper {
+            width: 100%;
+            max-width: 500px;
+            overflow-x: auto;
+            display: flex;
+            gap: 15px;
+            padding: 10px 5px 25px 5px;
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x mandatory;
+        }
+
+        .card {
+            min-width: 280px;
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: left;
+            scroll-snap-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            flex-shrink: 0;
+        }
+
+        .card.featured {
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 15px rgba(178, 34, 34, 0.4);
+        }
+
+        .card h4 { color: var(--primary-light); margin-bottom: 5px; font-size: 1.2rem; font-family: 'Playfair Display', serif;}
+        .card .price { font-size: 1.5rem; font-weight: bold; color: #fff; margin: 5px 0; }
+        .card .psf { font-size: 0.9rem; color: #aaa; margin-bottom: 10px; }
+        .card .desc { font-size: 0.85rem; color: #ddd; line-height: 1.4; }
+
+        /* List Card for Unit Types */
+        .list-card {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            max-width: 400px;
+            backdrop-filter: blur(5px);
+        }
+        .list-card-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* Nav Dots */
+        .nav-dots {
+            position: fixed;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 100;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: rgba(255,255,255,0.4);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .dot.active {
+            background: var(--primary-light);
+            transform: scale(1.5);
+            box-shadow: 0 0 8px var(--primary);
+        }
+
+        /* CTA Button */
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 1.5rem;
+            animation: pulse 2s infinite;
+            border: 1px solid rgba(255,255,255,0.2);
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(178, 34, 34, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(178, 34, 34, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(178, 34, 34, 0); }
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(4px);
+        }
+        .badge-alert { color: #ff4d4d; border: 1px solid #ff4d4d; }
+        .badge-info { color: #4ade80; border: 1px solid #4ade80; }
+        .badge-gold { color: #ffd700; border: 1px solid #ffd700; background: rgba(255, 215, 0, 0.1); }
+        .badge-success { color: #4ade80; border: 1px solid #4ade80; background: rgba(74, 222, 128, 0.1); }
+
+        /* Scroll Hint */
+        .scroll-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0.6;
+            animation: bounce 2s infinite;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateX(-50%) translateY(0);}
+            40% {transform: translateX(-50%) translateY(-10px);}
+            60% {transform: translateX(-50%) translateY(-5px);}
+        }
+
+        /* --- IMAGE MAPPING --- */
+        #slide1 { background-image: url('Terra Hill Terrain.jpg'); background-color: rgba(0,0,0,0.4); }
+        #slide2 { background-image: url('Terra Hill Location.jpg'); background-color: rgba(0,0,0,0.7); }
+        #slide3 { background-image: url('Terra Hill Terrain.jpg'); background-color: rgba(0,0,0,0.75); } 
+        #slide4 { background-image: url('Terra Hill Location.jpg'); background-color: rgba(0,0,0,0.7); }
+        #slide5 { background-image: url('Terra Hill Location.jpg'); background-color: rgba(0,0,0,0.8); } 
+        #slide6 { background-image: url('Terra Hill Pool.jpg'); background-color: rgba(0,0,0,0.6); }
+        #slide7 { background-image: url('Terra Hill Location.jpg'); background-color: rgba(0,0,0,0.85); }
+        #slide8 { background-image: url('Terra Hill Pool.jpg'); background-color: rgba(0,0,0,0.7); } 
+        #slide9 { background-image: url('Terra Hill Terrain.jpg'); background-color: rgba(0,0,0,0.6); }
+
+    </style>
+</head>
+<body>
+
+    <!-- 9 Navigation Dots -->
+    <div class="nav-dots">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+    </div>
+
+    <div class="story-container" id="scroller">
+
+        <!-- Slide 1: Title -->
+        <section id="slide1">
+            <div class="badge badge-alert"><i class="fas fa-bolt"></i> Market Alert</div>
+            <h1>The <span>Double Wave</span><br>is Coming</h1>
+            <p>Why Terra Hill is undervalued by <strong>~$400 PSF</strong> (Headline) vs future Leasehold.</p>
+            <p style="font-size:0.9rem; margin-top:-10px; opacity:0.8;">(~$230 PSF Savings after Normalization)</p>
+            <div class="scroll-hint">
+                <span>Swipe Up</span>
+                <i class="fas fa-chevron-down" style="margin-top: 5px;"></i>
+            </div>
+        </section>
+
+        <!-- Slide 2: Wave 1 (Kingsford) -->
+        <section id="slide2">
+            <h2>Wave 1:<br>The Benchmark</h2>
+            <p>The first private residential land plot at the former Keppel Club site was awarded to <strong>Kingsford Group</strong> in Nov 2025.</p>
+            
+            <div class="stat-box">
+                <div class="stat-row">
+                    <span class="stat-label">The Fact</span>
+                    <span class="stat-value">Sold @ $1,326 psf ppr <a href="#" class="citation-link">[1]</a></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Est. Launch</span>
+                    <span class="stat-value red">$2,800 - $2,900 PSF <a href="#" class="citation-link">[2]</a></span>
+                </div>
+            </div>
+            <p style="font-size: 0.8rem; opacity: 0.8; margin-top: 10px;">Note: This is for a <strong>99-Year Leasehold</strong>.</p>
+        </section>
+
+        <!-- Slide 3: The Anomaly -->
+        <section id="slide3">
+            <div class="badge badge-info">Pricing Anomaly</div>
+            <h2>The Freehold Gap</h2>
+            <p>Terra Hill is currently transacting in the <strong>$2,4xx - $2,5xx PSF</strong> range.</p>
+            
+            <div class="stat-box" style="border-left-color: #4ade80;">
+                <p style="font-size: 1.1rem; line-height: 1.4; margin: 0;">
+                    You are effectively securing a <strong>Freehold title</strong> for <span style="color:#4ade80">~$400 PSF LESS</span> than the upcoming Leasehold benchmark (Headline).
+                </p>
+                <div style="border-top: 1px dashed rgba(255,255,255,0.3); margin: 10px 0;"></div>
+                <p style="font-size: 0.9rem; margin: 0; color: #ddd;">
+                    Normalized Savings: <strong>~$230 PSF</strong>
+                </p>
+            </div>
+        </section>
+
+        <!-- Slide 4: Wave 2 (Future Tender) -->
+        <section id="slide4">
+            <h2>Wave 2:<br>Now Loaded</h2>
+            <p>The Ministry of National Development (MND) has confirmed the <strong>2026 GLS Programme</strong>.</p>
+            
+            <div class="stat-box">
+                <div class="stat-row">
+                    <span class="stat-label">The Fact</span>
+                    <span class="stat-value">2nd Plot at Berlayar <a href="#" class="citation-link">[3]</a></span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Yield</span>
+                    <span class="stat-value">~415 Units</span>
+                </div>
+            </div>
+            
+            <p style="margin-top: 15px; font-size: 0.95rem; max-width: 500px;">
+                <strong>Market Outlook:</strong> Should this plot attract competitive bidding, it would validate the $1,300+ land cost. This scenario signals the end of the "low price" era for the GSW.
+            </p>
+        </section>
+
+        <!-- Slide 5: Harmonisation Factor -->
+        <section id="slide5">
+            <div class="badge badge-gold">The Normalization</div>
+            <h2>The Harmonisation<br>Factor</h2>
+            <p style="font-size:0.9rem;">Terra Hill is <strong>Pre-Harmonised</strong> (includes AC ledge). Future plots are <strong>Post-Harmonised</strong> (exclude AC ledge). Does this eliminate the savings?</p>
+            
+            <div class="stat-box" style="border-left-color: #ffd700;">
+                <div class="stat-row">
+                    <span class="stat-label">Future Leasehold (Post)</span>
+                    <span class="stat-value red">$2,800 PSF</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Terra Hill (Pre)</span>
+                    <span class="stat-value">$2,444 PSF</span>
+                </div>
+                <div style="margin: 10px 0; border-top: 1px dashed rgba(255,255,255,0.2);"></div>
+                <div class="stat-row">
+                    <span class="stat-label">Effective Freehold Price<br><span style="font-size:0.7em; color:#999;">(Normalized for efficiency)</span></span>
+                    <span class="stat-value green">~$2,570 PSF</span>
+                </div>
+            </div>
+            
+            <p style="margin-top: 15px; font-size: 0.9rem; max-width: 500px;">
+                <strong>The Verdict:</strong> After normalization, the gap narrows from $400 to <strong>~$230 PSF</strong>. However, this is still a massive anomaly: Buying Freehold cheaper than Leasehold is rare.
+            </p>
+        </section>
+
+        <!-- Slide 6: Amenity Injection -->
+        <section id="slide6">
+            <h2>Amenity Injection<br>is Live</h2>
+            <p>HDB has launched <strong>Berlayar Residences</strong> (Prime Location) at the Keppel Club site <a href="#" class="citation-link">[4]</a>.</p>
+            
+            <div class="feature-list">
+                <div class="feature-item">
+                    <i class="fas fa-users"></i>
+                    <div><strong>Thousands of Residents:</strong> Guarantees immediate infrastructure development.</div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-school"></i>
+                    <div><strong>New Schools:</strong> Primary & Secondary schools to fit family needs.</div>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-train"></i>
+                    <div><strong>Accessibility:</strong> Amenities are just 1-2 MRT stops away (Direct Circle Line access).</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: Star Buys (Evergreen) -->
+        <section id="slide7">
+            <div class="badge badge-success">Latest Star Buys</div>
+            <h2>3-Bed Star Buys</h2>
+            <p>Indicative Pricing (Subject to Availability)</p>
+
+            <div class="cards-wrapper">
+                <!-- Card 1 -->
+                <div class="card featured">
+                    <div style="color:var(--primary-light); font-weight:bold; font-size:0.8rem; margin-bottom:5px;">TYPE C4 (1,076 sqft)</div>
+                    <h4>The Entry Star</h4>
+                    <div class="price">~$2.66M</div>
+                    <div class="psf">($2,479 PSF)</div>
+                    <div class="desc">Lowest quantum 3-bedder in GSW luxury belt. Cheaper than Clementi Leasehold.</div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card">
+                    <div style="color:var(--primary-light); font-weight:bold; font-size:0.8rem; margin-bottom:5px;">TYPE C5 (1,087 sqft)</div>
+                    <h4>Efficiency Star</h4>
+                    <div class="price">~$2.65M</div>
+                    <div class="psf">($2,444 PSF)</div>
+                    <div class="desc">Lowest PSF in development. "Recession-proof" entry vs land costs.</div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card">
+                    <div style="color:var(--primary-light); font-weight:bold; font-size:0.8rem; margin-bottom:5px;">TYPE C6 (1,098 sqft)</div>
+                    <h4>Premium Star</h4>
+                    <div class="price">~$2.77M</div>
+                    <div class="psf">($2,528 PSF)</div>
+                    <div class="desc">Superior privacy. Still priced below the $2,800 PSF projected leasehold launch.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: Other Units (NEW) -->
+        <section id="slide8">
+            <h2>A Home for<br>Every Stage</h2>
+            <p>Beyond our 3-Bedders, explore the full range of Freehold luxury.</p>
+            
+            <div class="list-card">
+                <div class="list-card-icon">2</div>
+                <div>
+                    <h4 style="margin:0; color:var(--primary-light);">2-Bedroom</h4>
+                    <span style="font-size:0.85rem; color:#ccc;">Ideal Entry Investment / Compact Luxury</span>
+                </div>
+            </div>
+
+            <div class="list-card">
+                <div class="list-card-icon">4</div>
+                <div>
+                    <h4 style="margin:0; color:var(--primary-light);">4-Bedroom</h4>
+                    <span style="font-size:0.85rem; color:#ccc;">Spacious Living for Multi-Gen Families</span>
+                </div>
+            </div>
+
+            <div class="list-card">
+                <div class="list-card-icon">5</div>
+                <div>
+                    <h4 style="margin:0; color:var(--primary-light);">5-Bedroom</h4>
+                    <span style="font-size:0.85rem; color:#ccc;">The Prestige Collection with Private Lift</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 9: CTA -->
+        <section id="slide9">
+            <h1>Secure Your<br>Legacy</h1>
+            <p>The window to buy Freehold at Leasehold prices is closing.</p>
+            
+            <a href="https://wa.me/6591860119?text=Hi,%20I%20saw%20the%20Double%20Wave%20slides.%20I%20would%20like%20to%20secure%20a%20viewing%20slot%20for%20the%20Star%20Buy%20units." class="cta-btn">
+                <i class="fab fa-whatsapp"></i> Secure Viewing Slot
+            </a>
+            <p style="font-size: 0.8rem; margin-top: 20px; opacity: 0.6;">Contact: +65 9186 0119</p>
+        </section>
+
+    </div>
+
+    <script>
+        // Intersection Observer for Animations and Nav Dots
+        const sections = document.querySelectorAll('section');
+        const dots = document.querySelectorAll('.dot');
+        const scroller = document.getElementById('scroller');
+
+        const observerOptions = {
+            root: scroller,
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Add visible class for animation
+                    entry.target.classList.add('visible');
+
+                    // Update Dots
+                    const id = entry.target.getAttribute('id');
+                    const index = Array.from(sections).findIndex(section => section.id === id);
+                    
+                    dots.forEach(dot => dot.classList.remove('active'));
+                    if(dots[index]) dots[index].classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
